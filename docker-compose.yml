@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+  yourls:
+    build: .
+    ports:
+      - "8080:80"
+    environment:
+      - DB_USER=yourls
+      - DB_PASS=yourls
+      - DB_NAME=yourls
+      - DB_HOST=db
+      - YOURLS_SITE=http://localhost:8080
+      - ADMIN_USER=admin
+      - ADMIN_PASS=senha123
+    depends_on:
+      - db
+    volumes:
+      - yourls_data:/var/www/html
+
+  db:
+    image: mysql:8.0
+    environment:
+      - MYSQL_ROOT_PASSWORD=rootpass
+      - MYSQL_DATABASE=yourls
+      - MYSQL_USER=yourls
+      - MYSQL_PASSWORD=yourls
+    volumes:
+      - db_data:/var/lib/mysql
+
+volumes:
+  yourls_data:
+  db_data:

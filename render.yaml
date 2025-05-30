@@ -1,0 +1,36 @@
+services:
+  - type: web
+    name: yourls-app
+    env: docker
+    dockerfilePath: ./Dockerfile
+    envVars:
+      - key: DB_HOST
+        fromDatabase:
+          name: yourls-db
+          property: host
+      - key: DB_NAME
+        fromDatabase:
+          name: yourls-db
+          property: database
+      - key: DB_USER
+        fromDatabase:
+          name: yourls-db
+          property: user
+      - key: DB_PASS
+        fromDatabase:
+          name: yourls-db
+          property: password
+      - key: YOURLS_SITE
+        sync: false
+      - key: ADMIN_USER
+        sync: false
+      - key: ADMIN_PASS
+        generateValue: true
+      - key: COOKIEKEY
+        generateValue: true
+
+databases:
+  - name: yourls-db
+    databaseName: yourls
+    user: yourls
+    plan: free
